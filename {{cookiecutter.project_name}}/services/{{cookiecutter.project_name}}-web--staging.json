@@ -1,0 +1,15 @@
+{
+  "desiredCount": {{cookiecutter.services__project_name_web_alpha__desired_count}},
+  "role": "SocialCode_ECS_ELB",
+  "deploymentConfiguration": {
+    "maximumPercent": {{cookiecutter.services__project_name_web_alpha__deployment_configuration__maximum_percent}},
+    "minimumHealthyPercent": {{cookiecutter.services__project_name_web_alpha__deployment_configuration__minimum_healthy_percent}}
+  },
+  "loadBalancers": [
+    {
+      "targetGroupArn": "{{cookiecutter.services__project_name_web_alpha__load_balancers__target_group_arn}}",
+      "containerName": "{{cookiecutter.services__project_name_web_alpha__load_balancers__container_name}}",
+      "containerPort": {{cookiecutter.services__project_name_web_alpha__load_balancers__container_port}}
+    }
+  ]
+}

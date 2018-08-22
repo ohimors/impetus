@@ -1,0 +1,52 @@
+version: '2'
+
+services:
+  web:
+    image: socialcode/{{cookiecutter.project_name}}${TAG_SUFFIX}
+    build: .
+    links:
+      - database
+    command: [
+      "--verbose",
+      "--timeout", "60s",
+      "--wait", "tcp://database:3306",
+      "--run", "django-admin.py", "migrate" , "--noinput", "--",
+      "--run", "django-admin.py", "collectstatic", "--noinput", "--",
+      "uwsgi", "uwsgi.ini", "--py-autoreload", "1"]
+    environment:
+      - DEBUG=True
+      - VERSION=${VERSION}
+      - SECRETS_FILES=/secrets/{{cookiecutter.project_name}}.secrets.env
+      - DATABASE_HOST=database
+      - DATABASE_NAME={{cookiecutter.docker_compose__database_name__common}}
+      - SOCIALCODE_HOST=alpha.socialcodedev.com
+      - SERVER_EMAIL=sesdev@socialcode.com
+      - ENABLE_API_DOCS=True
+    ports:
+      - "8000:8000"
+    volumes:
+      - ${HOME}/.secrets:/secrets:ro
+      - ${HOME}/.aws:/root/.aws/
+    networks:
+      - discovery-network
+
+  database:
+    image: mysql:{{cookiecutter.docker_compose__mysql_version__common}}
+    ports:
+      - "3306"
+    environment:
+      - MYSQL_RANDOM_ROOT_PASSWORD=yes
+      - MYSQL_DATABASE={{cookiecutter.docker_compose__database_name__common}}
+      - MYSQL_USER={{cookiecutter.docker_compose__mysql_user__common}}
+      - MYSQL_PASSWORD=edoclaicos
+    networks:
+      - {{cookiecutter.docker_compose__network}}
+
+networks:
+  discovery-network:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+      - subnet: 172.16.238.0/24
+        gateway: 172.16.238.1

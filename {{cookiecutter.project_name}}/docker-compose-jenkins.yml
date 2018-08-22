@@ -1,0 +1,32 @@
+version: '2'
+
+services:
+
+  web:
+    image: socialcode/{{cookiecutter.project_name}}${TAG_SUFFIX}
+    build: .
+    links:
+      - database
+    environment:
+      - DEBUG=True
+      - VERSION=${VERSION}
+      - SECRETS_FILES=/secrets/secrets.local.env
+      - DATABASE_HOST=database
+      - DATABASE_NAME={{cookiecutter.docker_compose__database_name__common}}
+      - SOCIALCODE_HOST=alpha.socialcodedev.com
+      - SERVER_EMAIL=sesdev@socialcode.com
+      - ENABLE_API_DOCS=True
+    ports:
+      - "8000:8000"
+    volumes:
+      - ${PWD}:/secrets:ro
+
+  database:
+    image: mysql:{{cookiecutter.docker_compose__mysql_version__common}}
+    ports:
+      - "3306"
+    environment:
+      - MYSQL_RANDOM_ROOT_PASSWORD=yes
+      - MYSQL_DATABASE={{cookiecutter.docker_compose__database_name__common}}
+      - MYSQL_USER={{cookiecutter.docker_compose__mysql_user__common}}
+      - MYSQL_PASSWORD=edoclaicos

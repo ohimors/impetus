@@ -1,0 +1,21 @@
+Django=={{cookiecutter.requirements__django_version}}                         # https://docs.djangoproject.com/en/2.0/
+djangorestframework=={{cookiecutter.requirements__djangorestframework_version}}                 # http://www.django-rest-framework.org/
+djangorestframework-filters=={{cookiecutter.requirements__djangorestframework_filters_version}}        # https://github.com/philipn/django-rest-framework-filters
+django-filter=={{cookiecutter.requirements__django_filter_version}}                  # https://github.com/carltongibson/django-filter (from djangorestframework-filters)
+djangorestframework-jsonapi=={{cookiecutter.requirements__djangorestframework_jsonapi_version}}    # http://django-rest-framework-json-api.readthedocs.io/
+django-rest-swagger=={{cookiecutter.requirements__django_rest_swagger_version}}           # https://django-rest-swagger.readthedocs.io/
+
+
+mysqlclient=={{cookiecutter.requirements__mysqlclient_version}}                   # https://mysqlclient.readthedocs.io/
+raven=={{cookiecutter.requirements__raven_version}}                          # https://docs.sentry.io/clients/python/
+requests=={{cookiecutter.requirements__requests_version}}                     # http://requests.readthedocs.io/
+requests-oauthlib=={{cookiecutter.requirements__requests_oauthlib_version}}              # https://requests-oauthlib.readthedocs.io/
+responses=={{cookiecutter.requirements__responses_version}}                     # https://github.com/getsentry/responses
+uWSGI=={{cookiecutter.requirements__uWSGI_version}}                       # https://uwsgi-docs.readthedocs.io/en/latest/
+
+# tests and style checks
+pycodestyle=={{cookiecutter.requirements__pycodestyle_version}}                   # https://pycodestyle.readthedocs.io/
+pylint=={{cookiecutter.requirements__pylint_version}}                        # https://www.pylint.org/
+
+# production dependencies
+newrelic=={{cookiecutter.requirements__newrelic_version}}                   # https://docs.newrelic.com/

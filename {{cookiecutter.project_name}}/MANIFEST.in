@@ -1,0 +1,2 @@
+recursive-include {{cookiecutter.project_name}}/static *
+recursive-include {{cookiecutter.project_name}}/fixtures *.json

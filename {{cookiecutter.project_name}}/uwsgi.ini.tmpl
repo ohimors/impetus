@@ -1,0 +1,24 @@
+[uwsgi]
+http = :8000
+module = {{cookiecutter.application_name}}.wsgi:application
+processes = 4
+threads = 2
+master = 1
+harakiri = 300
+thunder-lock = true
+# set to uWSGI max to allow longer query strings in requests
+# https://github.com/SocialCodeInc/chef/pull/6810 for reference
+buffer-size = 65535
+enable-threads = true
+single-interpreter = true
+# Milliseconds to wait before closing a connection.
+# Must be higher than the ELB's timeout.
+http-keepalive = 65000
+static-map = /static/=/var/{{cookiecutter.application_name}}/static/
+offload-threads = %k
+{% raw %}
+{{if .Env.SENTRY_DSN}}
+alarm = harakiri sentry:dsn={{ .Env.SENTRY_DSN }},logger=uwsgi.sentry,culprit=harakiri
+log-alarm = harakiri HARAKIRI \[
+{{end}}
+{% endraw %}

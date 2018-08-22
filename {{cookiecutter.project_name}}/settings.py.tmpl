@@ -1,0 +1,64 @@
+import os
+from {{cookiecutter.application_name}}.settings import *
+
+{% raw %}
+{{ if .Env.DEBUG }}
+DEBUG = {{ .Env.DEBUG }}
+LOGGING['handlers']['console']['level'] = 'DEBUG'
+{{ end }}
+
+{{ if .Env.TEST }}
+LOGGING['handlers']['console']['level'] = 'CRITICAL'
+{{ end }}
+{% endraw %}
+
+{% raw %}
+# Database configuration
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': '{{ .Env.DATABASE_NAME }}',
+        'HOST': '{{ .Env.DATABASE_HOST }}',
+        'PORT': '3306',
+        'USER': '{{ default .Secret.DATABASE_USERNAME }}',
+        'PASSWORD': '{{ default .Secret.DATABASE_PASSWORD }}',
+        'CHARSET': 'utf8mb4',
+        'COLLATION': 'utf8mb4_general_ci',
+        'OPTIONS': {
+            'sql_mode': 'STRICT_ALL_TABLES'
+        }
+    }
+}
+{% endraw %}
+
+{% raw %}
+SECRET_KEY = '{{ default .Secret.SECRET_KEY "django_secret_key_placeholder" }}'
+SC_ENV = '{{ .Env.SC_ENV }}'
+SOCIALCODE_HOST = '{{ .Env.SOCIALCODE_HOST }}'
+
+{{ if .Env.STATIC_URL }}
+STATIC_URL = '{{ .Env.STATIC_URL }}'
+{{ end }}
+
+SERVER_EMAIL = '{{ default .Env.SERVER_EMAIL "sesdev@socialcode.com" }}'
+DEFAULT_FROM_EMAIL = '{{ default .Env.SERVER_EMAIL "sesdev@socialcode.com" }}'
+
+{{if .Env.SENTRY_DSN }}
+RAVEN_CONFIG = {
+    'dsn': '{{ .Env.SENTRY_DSN }}',
+    'environment': SC_ENV,
+    'release': os.environ.get('VERSION', 'UNKNOWN'),
+}
+INSTALLED_APPS += ('raven.contrib.django.raven_compat',)
+{{end}}
+
+# enable drf browsable api
+ENABLE_API_DOCS = {{ default .Env.ENABLE_API_DOCS "False" }}
+if ENABLE_API_DOCS:
+    REST_FRAMEWORK['DEFAULT_RENDERER_CLASSES'].append(
+        'rest_framework.renderers.BrowsableAPIRenderer'
+    )
+
+AUTHORIZATION_SERVICE_CLIENT_ID = '{{ default .Secret.AUTHORIZATION_SERVICE_CLIENT_ID "authorization-service-client-id-from-databag" }}'
+AUTHORIZATION_SERVICE_CLIENT_SECRET = '{{ default .Secret.AUTHORIZATION_SERVICE_CLIENT_SECRET "authorization-service-client-secret-from-databag" }}'
+{% endraw %}

@@ -1,0 +1,23 @@
+{{cookiecutter.project_name}}:
+  image: socialcode/{{cookiecutter.project_name}}:${VERSION}
+
+  volumes:
+    - /secrets:/secrets:ro
+
+  environment:
+    - SC_ENV=${SC_ENV}
+    - SECRETS_FILES=/secrets/secrets.env
+    - DATABASE_NAME={{cookiecutter.docker_compose__database_name__common}}
+    - VERSION=${VERSION}
+
+  command: [
+    "--verbose",
+    "--run", "django-admin.py", "collectstatic", "--noinput", "--",
+    "newrelic-admin", "run-program", "uwsgi", "uwsgi.ini", "--plugin", "sentry"
+  ]
+
+  ports:
+    - "8000:8000"
+
+  env_file:
+    - ${SC_ENV}.env
