@@ -1,0 +1,8 @@
+.git/
+.gitignore
+dev_settings.py
+Dockerfile
+local_settings.py
+build/
+dist/
+venv/

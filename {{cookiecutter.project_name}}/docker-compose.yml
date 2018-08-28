@@ -28,7 +28,7 @@ services:
       - ${HOME}/.secrets:/secrets:ro
       - ${HOME}/.aws:/root/.aws/
     networks:
-      - discovery-network
+      - {{cookiecutter.docker_compose__network}}
 
   database:
     image: mysql:{{cookiecutter.docker_compose__mysql_version__common}}
@@ -43,7 +43,7 @@ services:
       - {{cookiecutter.docker_compose__network}}
 
 networks:
-  discovery-network:
+  {{cookiecutter.docker_compose__network}}:
     driver: bridge
     ipam:
       driver: default

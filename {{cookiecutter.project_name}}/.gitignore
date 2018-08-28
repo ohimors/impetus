@@ -1,0 +1,15 @@
+*.pyc
+build/
+dist/
+venv/
+{{cookiecutter.application_name}}.egg-info/
+{{cookiecutter.application_name}}_project/
+
+# IntelliJ / PyCharm
+.idea/
+
+# Jenkins build artifacts?
+.virtualenv/
+.anchorchain.links
+
+local_settings.py

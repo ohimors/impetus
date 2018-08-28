@@ -1,4 +1,5 @@
 Django=={{cookiecutter.requirements__django_version}}                         # https://docs.djangoproject.com/en/2.0/
+django-extensions==2.1.2				# https://django-extensions.readthedocs.io/en/latest/
 djangorestframework=={{cookiecutter.requirements__djangorestframework_version}}                 # http://www.django-rest-framework.org/
 djangorestframework-filters=={{cookiecutter.requirements__djangorestframework_filters_version}}        # https://github.com/philipn/django-rest-framework-filters
 django-filter=={{cookiecutter.requirements__django_filter_version}}                  # https://github.com/carltongibson/django-filter (from djangorestframework-filters)

@@ -1,6 +1,5 @@
 """Client classes that communicate with other services"""
 import logging
-import looker_client
 from urllib import parse
 
 from django.conf import settings
