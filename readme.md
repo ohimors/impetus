@@ -7,10 +7,10 @@ This project is a cookie-cutter template for SocialCode dockerized Django projec
 
 These instructions describe how to get the advisor service running on your local machine for development and testing purposes. 
 
-####Prerequisites
+#### Prerequisites
 
 
-####SC Template Structure
+#### SC Template Structure
 ```
 .
 ├── [X] Dockerfile - Contains commands for setting up project docker image
